@@ -8,7 +8,13 @@ Requirements
 
 * Awesome 3.5+
 * [gobolight](http://github.com/gobolinux/GoboLight)
-* `lode-fonts` for a nice-looking mixer pop-up :-)
+
+Installing
+----------
+
+```
+luarocks install gobo-awesome-light
+```
 
 Using
 -----
