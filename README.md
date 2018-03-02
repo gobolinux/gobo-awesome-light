@@ -37,7 +37,7 @@ In a typical `rc.lua` this will look like this:
 
 
 ```
-right_layout:add(light.new())
+right_layout:add(light_widget)
 ```
 
 Additionally, add keybindings for your multimedia keys:
