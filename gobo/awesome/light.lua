@@ -80,6 +80,8 @@ local function pread(cmd)
    return data
 end
 
+local updater
+
 function light.new()
    local widget = wibox.widget.imagebox()
    local state = {
@@ -88,14 +90,18 @@ function light.new()
    }
 
    local function update(cmd)
+      local prev = state.brightness
       local brightness = pread(cmd):match("^(%d+)")
       if not brightness then
          state.valid = false
-         return
+         return prev, nil
       end
       state.brightness = tonumber(brightness)
       update_icon(widget, state)
+      return prev, state.brightness
    end
+   
+   updater = update
 
    widget.inc_brightness = function(self, val)
       update("gobolight -inc "..val)
@@ -147,6 +153,12 @@ function light.new()
    update("gobolight")
    widget:connect_signal("mouse::enter", function() update("gobolight") end)
    return widget
+end
+
+function light.update_backlight(cmd)
+   if updater then
+      return updater("gobolight " .. (cmd or ""))
+   end
 end
 
 return light
